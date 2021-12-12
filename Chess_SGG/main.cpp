@@ -1,9 +1,11 @@
 #include "graphics.h"
+#include "config.h"
 
 /*
 TEST FILES!
 */
 
+using namespace config;
 
 // The custom callback function that the library calls 
 // to check for and set the current application state.
@@ -39,12 +41,12 @@ void draw()
 
 int main()
 {
-	graphics::createWindow(1200, 600, "Hello World");
+	graphics::createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World");
 
 	graphics::setDrawFunction(draw);
 	graphics::setUpdateFunction(update);
 
-	graphics::setCanvasSize(1000, 500);
+	graphics::setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
 	graphics::setCanvasScaleMode(graphics::CANVAS_SCALE_FIT);
 
 	graphics::Brush br;
