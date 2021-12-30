@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "game.h"
 #include "menu.h"
 
@@ -41,6 +42,13 @@ void update(float ms)
 
 int main(int argc, char** argv)
 {
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDERR);
+	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDERR);
+	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
+
 	Menu* menu{ Menu::getInstance() };
 	Game* game{ Game::getInstance() };
 
@@ -60,6 +68,9 @@ int main(int argc, char** argv)
 	game->releaseInstance();
 
 	graphics::destroyWindow();
+
+	_CrtDumpMemoryLeaks();
+
 
 	return EXIT_SUCCESS;
 }

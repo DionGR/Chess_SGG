@@ -188,23 +188,25 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="queen.cpp" />
     <ClCompile Include="square.cpp" />
-    <ClCompile Include="tower.cpp" />
+    <ClCompile Include="rook.cpp" />
     <ClCompile Include="whiteplayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blackplayer.h" />
     <ClInclude Include="chesspiece.h" />
     <ClInclude Include="chessboard.h" />
+    <ClInclude Include="debug.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameobject.h" />
     <ClInclude Include="king.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="material.h" />
     <ClInclude Include="pawn.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="queen.h" />
     <ClInclude Include="square.h" />
-    <ClInclude Include="tower.h" />
+    <ClInclude Include="rook.h" />
     <ClInclude Include="whiteplayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

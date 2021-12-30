@@ -8,21 +8,14 @@
 
 class Game{
 public:
-	enum class State {
-		INIT,
-		LOADING,
-		IDLE,
-		MOVING,
-		ATTACKING
-	};
+	enum class State { INIT, LOADING, PLAYING, END };
 private:
+	Game() {};
 	static Game* m_instance;
+
 	State m_state = State::INIT;
 
 	Chessboard* m_board;
-
-
-	Game() {};
 public:
 	static Game* getInstance();
 	void releaseInstance();

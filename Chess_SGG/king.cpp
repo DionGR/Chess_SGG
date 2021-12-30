@@ -1,6 +1,7 @@
 #include "king.h"
 
 
+/* Initializes the chesspiece's colour and basic attributes and calls the init method */
 King::King(Color color) :
 	Chesspiece(color)
 {
@@ -8,30 +9,28 @@ King::King(Color color) :
 }
 
 
+/* Sets the brush's texture according to the colour */
 void King::init()
 {
-	
 	switch (m_color) {
-	case(Color::WHITE):
-		m_br.texture = W_KING_PATH;
-		break;
-	case(Color::BLACK):
-		m_br.texture = B_KING_PATH;
-		break;
+		case(Color::WHITE):
+			m_br.texture = W_KING_PATH;
+			break;
+		case(Color::BLACK):
+			m_br.texture = B_KING_PATH;
+			break;
 	}
 }
 
 
-
-void King::draw()
+/* Checks whether the piece can occupy the square given */
+bool King::canOccupy(Square* square, Square* square_arr[5][4])
 {
-	float highlight = 1.0f * m_highlighted;
-	m_br.outline_opacity = highlight;
-	graphics::drawRect(m_pos[0], m_pos[1], 40.0f, 50.0f, m_br);
-}
+	int srcI = m_square->getIndexI();
+	int srcJ = m_square->getIndexJ();
+	int dstI = square->getIndexI();
+	int dstJ = square->getIndexJ();
 
-
-
-void King::update()
-{
+	// The move is valid if it is exactly one step in any direction
+	return (std::abs(dstI - srcI) == 1 && std::abs(dstJ - srcJ) == 1) || (std::abs(dstI - srcI) == 1 && srcJ == dstJ) || (std::abs(dstJ - srcJ) == 1 && srcI == dstI);
 }

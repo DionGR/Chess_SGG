@@ -2,12 +2,12 @@
 
 #include "chesspiece.h"
 
-class Queen: public Chesspiece
+class Rook: public Chesspiece
 {
 private:
 	void init();
 public:
-	Queen(Color color);
+	Rook(Color color);
 
 	bool canOccupy(Square* square, Square* square_arr[5][4]);
 };

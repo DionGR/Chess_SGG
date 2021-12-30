@@ -1,39 +1,46 @@
 #pragma once
 
+#include <cmath>
+#include <deque>
+
 #include "gameobject.h"
+#include "material.h"
+
 #include "square.h"
 
-
-class Chesspiece : GameObject {
+/**
+* Chesspiece Abstract Class
+*
+* Provides a model for all our chesspieces, as well
+* most of their instance methods and attributes.
+*/
+class Chesspiece : GameObject, public Material {
 protected:
 	graphics::Brush m_br;
 
-	float m_pos[2]{ 0.0f, 0.0f };
 	Color m_color;
 
-	class Square* m_square{ nullptr };
+	class Square* m_square;
 
-	bool m_highlighted{ false };
+	bool m_highlighted;
 
-	Chesspiece(Color color) : m_color(color) {}
-	virtual void init() {};
+	Chesspiece(Color color);
+	virtual void init() = 0;
 public:
-	bool m_moved{ false };
-	virtual void draw() {};
-	virtual void update() {};
+	void draw();
+	void update();
 
-	void setHighlight(bool state) { m_highlighted = state; }
-	void setPosX(float x) { m_pos[0] = x; }
-	void setPosY(float x) { m_pos[1] = x; }
-	float getPosX() { return m_pos[0]; }
-	float getPosY() { return m_pos[1]; }
-	bool contains(float x, float y) { return distance(x, y, m_pos[0], m_pos[1]) < 25.0f; };
+	void setPosX(float x);
+	void setPosY(float x);
+	void setSquare(Square* square);
+	void setHighlight(bool highlighted);
+	Square* getSquare() const;
+	const Color getColor() const;
 
-	Color getColor() { return m_color; }
-
-	Square* getSquare() { return m_square; }
-	void setSquare(Square* square) {
-		m_square = square; 
-	}
-
+	virtual bool canOccupy(Square* square, Square* square_arr[5][4]) = 0;
 };
+
+/* Chesspiece* Deque and Deque Iterator Type Definitions */
+using piecelist_t = std::deque<Chesspiece*>;
+using piecelist_itr_t = std::deque<Chesspiece*>::iterator;
+using piecelist_rvitr_t = std::deque<Chesspiece*>::reverse_iterator;

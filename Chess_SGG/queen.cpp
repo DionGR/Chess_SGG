@@ -1,32 +1,59 @@
 #include "queen.h"
 
+
+/* Initializes the chesspiece's colour and basic attributes and calls the init method */
 Queen::Queen(Color color) :
 	Chesspiece(color)
 {
 	init();
 }
 
+
+/* Sets the brush's texture according to the colour */
 void Queen::init()
 {
-	m_br.outline_opacity = 0.0f;
-
 	switch (m_color) {
-	case(Color::WHITE):
-		m_br.texture = W_QUEEN_PATH;
-		break;
-	case(Color::BLACK):
-		m_br.texture = B_QUEEN_PATH;
-		break;
+		case(Color::WHITE):
+			m_br.texture = W_QUEEN_PATH;
+			break;
+		case(Color::BLACK):
+			m_br.texture = B_QUEEN_PATH;
+			break;
 	}
 }
 
-void Queen::draw()
-{
-	float highlight = 1.0f * m_highlighted;
-	m_br.outline_opacity = highlight;
-	graphics::drawRect(m_pos[0], m_pos[1], 40.0f, 50.0f, m_br);
-}
 
-void Queen::update()
+/* Checks whether the piece can occupy the square given */
+bool Queen::canOccupy(Square* square, Square* square_arr[5][4])
 {
+	int srcI = m_square->getIndexI();
+	int srcJ = m_square->getIndexJ();
+	int dstI = square->getIndexI();
+	int dstJ = square->getIndexJ();
+
+	int di{ (srcI < dstI) ? 1 : -1 };
+	int dj{ (srcJ < dstJ) ? 1 : -1 };
+
+	if (srcI == dstI) {													// If it is vertical or horizontal and there are no obstacles
+		for (int j{ srcJ + dj }; j != dstJ; j += dj){					// It is valid, similar to Rook
+			if (square_arr[srcI][j]->getPiece() != nullptr)
+				return false;
+		}
+		return true;
+	}
+	else if (srcJ == dstJ) {											// Same as above
+		for (int i{ srcI + di }; i != dstI; i += di) {
+			if (square_arr[i][srcJ]->getPiece() != nullptr)
+				return false;
+		}
+		return true;
+	}else if (std::abs(dstI - srcI) == std::abs(dstJ - srcJ)) {			// If the move is diagonal 
+		for (int i{ 1 }; i < std::abs(srcI - dstI); ++i) {				// And there are no objects
+			if (square_arr[srcI + i * di][srcJ + i * dj]->getPiece() != nullptr)
+				return false;
+		}
+		return true;													// It is valid
+	}
+
+	return false;														// Any other case, invalid
 }

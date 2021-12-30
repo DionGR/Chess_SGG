@@ -8,7 +8,7 @@ private:
 	void init();
 public:
 	King(Color color);
-	void draw();
-	void update();
+
+	bool canOccupy(Square* square, Square* square_arr[5][4]);
 };
 

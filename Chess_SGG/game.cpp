@@ -12,7 +12,7 @@ Game* Game::getInstance()
 }
 
 
-/* Releases the current active game instance, freeing all dynamic memory. */
+/* Releases the current active Game instance, freeing all dynamic memory. */
 void Game::releaseInstance()
 {
 	if (m_board) m_board->releaseInstance();
@@ -32,20 +32,7 @@ void Game::init()
 	m_board = Chessboard::getInstance();
 	m_board->init();
 	
-	m_state = State::IDLE;
-}
-
-
-/* Continuously updates, awaiting for user input. */
-void Game::update()
-{
-	if (m_state == State::INIT)	return;
-	if (m_state == State::LOADING) {
-		init();
-		return;
-	}
-
-	m_board->update(); 
+	m_state = State::PLAYING;
 }
 
 
@@ -58,22 +45,32 @@ void Game::draw()
 	SETCOLOR(br.fill_color, 0.25f, 0.25f, 0.25f);
 	graphics::setWindowBackground(br);
 
-	if (m_state == State::INIT)
-	{
-		SETCOLOR(br.fill_color, 1.0f, 1.0f, 1.0f);
-		graphics::setFont(FONT_PATH);
-		graphics::drawText(CANVAS_WIDTH / 3.1, CANVAS_HEIGHT / 2, 20.0f, "LOADING ASSETS...", br);
-		m_state = State::LOADING;
-		return;
-	}// Draw the loading screen.
-
-
-
-
-	/* Gameboard */
-	m_board->draw();
-
+	/* Depending on the state, draw the appropriate thing*/
+	switch (m_state){
+		case State::INIT:	 // Loading Screen
+			SETCOLOR(br.fill_color, 1.0f, 1.0f, 1.0f);
+			graphics::setFont(FONT_PATH);
+			graphics::drawText(CANVAS_WIDTH / 3.1, CANVAS_HEIGHT / 2, 20.0f, "LOADING ASSETS...", br);
+			m_state = State::LOADING;
+			return;
+		case State::PLAYING: // Game Board
+			m_board->draw();
+			return;
+	}	
 }
 
 
-
+/* Continuously updates, awaiting for user input. */
+void Game::update()
+{
+	switch (m_state) {
+		case State::PLAYING:
+			m_board->update();
+			return;
+		case State::LOADING:
+			init();
+			__fallthrough;
+		case State::INIT:
+			return;
+	}
+}
