@@ -24,7 +24,7 @@ void Queen::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool Queen::canOccupy(Square* square, Square* square_arr[5][4])
+bool Queen::canOccupy(Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI = m_square->getIndexI();
 	int srcJ = m_square->getIndexJ();
@@ -39,20 +39,20 @@ bool Queen::canOccupy(Square* square, Square* square_arr[5][4])
 			if (square_arr[srcI][j]->getPiece() != nullptr)
 				return false;
 		}
-		return true;
+		return 	square->hasEnemyOf(this) || square->isEmpty();
 	}
 	else if (srcJ == dstJ) {											// Same as above
 		for (int i{ srcI + di }; i != dstI; i += di) {
 			if (square_arr[i][srcJ]->getPiece() != nullptr)
 				return false;
 		}
-		return true;
+		return 	square->hasEnemyOf(this) || square->isEmpty();
 	}else if (std::abs(dstI - srcI) == std::abs(dstJ - srcJ)) {			// If the move is diagonal 
 		for (int i{ 1 }; i < std::abs(srcI - dstI); ++i) {				// And there are no objects
 			if (square_arr[srcI + i * di][srcJ + i * dj]->getPiece() != nullptr)
 				return false;
 		}
-		return true;													// It is valid
+		return 	square->hasEnemyOf(this) || square->isEmpty();			// It is valid if it has an enemy
 	}
 
 	return false;														// Any other case, invalid

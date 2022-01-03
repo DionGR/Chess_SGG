@@ -11,12 +11,26 @@ namespace global
 {
 
 	/* Window Variables */
-	namespace window {
-		inline constexpr char const* WINDOW_NAME{ "Silverman 4x5 Chess v0.1" };
-		inline constexpr unsigned WINDOW_WIDTH{ 1300 };
-		inline constexpr unsigned WINDOW_HEIGHT{ 950 };
-		inline constexpr float CANVAS_WIDTH{ 500.0f };
-		inline constexpr float CANVAS_HEIGHT{ 500.0f };
+	namespace size {
+		
+		namespace window {
+			inline constexpr char const* WINDOW_NAME{ "Silverman 4x5 Chess v0.1" };
+			inline constexpr unsigned WINDOW_WIDTH{ 1300 };
+			inline constexpr unsigned WINDOW_HEIGHT{ 950 };
+			inline constexpr float CANVAS_WIDTH{ 500.0f };
+			inline constexpr float CANVAS_HEIGHT{ 500.0f };
+		}
+
+		namespace objects {
+			inline constexpr unsigned BOARD_WIDTH{ 4 };
+			inline constexpr unsigned BOARD_HEIGHT{ 5 };
+
+			inline constexpr float PIECE_WIDTH{ 40.0f };
+			inline constexpr float PIECE_HEIGHT{ 50.0f };
+
+			inline constexpr float SQUARE_WIDTH{ 47.0f };
+			inline constexpr float SQUARE_HEIGHT{ 60.0f };
+		}
 	}
 
 	/* File Constants */
@@ -26,6 +40,9 @@ namespace global
 		namespace sound {
 			inline constexpr char const* MENU_MUSIC{ ".\\assets\\sounds\\menu_song.mp3" };
 			inline constexpr char const* START_GAME_EFFECT{ ".\\assets\\sounds\\effects\\start_game.mp3" };
+			inline constexpr char const* END_GAME_EFFECT{ ".\\assets\\sounds\\effects\\end_game.mp3" };
+			inline constexpr char const* PIECE_MOVED_EFFECT{ ".\\assets\\sounds\\effects\\piece_moved.mp3" };
+			inline constexpr char const* PIECE_CAPTURED_EFFECT{ ".\\assets\\sounds\\effects\\piece_captured.mp3" };
 		}
 
 		// Fonts
@@ -61,31 +78,62 @@ namespace global
 			GAME
 		};
 
+		// Difficulty 
+		enum class Difficulty {
+			EASY,
+			NORMAL
+		};
+
 		// Colour
 		enum class Color {
 			WHITE,
 			BLACK
 		};
 
-		inline Mode g_mode{ Mode::MAIN_MENU };		// Open the MAIN MENU by default.
+		enum class State { 
+			INIT, 
+			LOADING, 
+			PLAYING, 
+			WHITE_WINS, 
+			BLACK_WINS,
+			GAME_REVIEW
+		};
+
+		inline Mode g_mode{ Mode::MAIN_MENU };				// Open the MAIN MENU by default.
+		/* If we are on DEBUG mode, we need highlighting. */
+		#ifdef _DEBUG
+				inline Difficulty g_diff{ Difficulty::EASY }; 
+		#else
+				inline Difficulty g_diff{ Difficulty::NORMAL };
+		#endif
 	}
 
 	/* Functions */
 	namespace functions {
+
+		/* Awaits for ms*10^-3 seconds */
 		inline void sleep(int ms) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 		}
+
+		/* Calculates the distance between 2 coordinates */
 		inline float distance(float x1, float y1, float x2, float y2) {
 			float dx = x1 - x2;
 			float dy = y1 - y2;
 			return sqrtf(dx * dx + dy * dy);
 		}
+
+		template<typename Base, typename T>
+		inline bool instanceof(const T* src) {
+			return dynamic_cast<const Base*>(src) != nullptr;
+		}
 	}
 }
 
-
-using namespace global;	// Make our global constants easy to use everywhere
-using namespace global::window;
+/* Make our global constants easy to use everywhere */
+using namespace global;	
+using namespace global::size::window;
+using namespace global::size::objects;
 
 using namespace global::path;
 using namespace global::path::font;

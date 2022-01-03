@@ -2,18 +2,16 @@
 
 /* Constructs a square according to the arguments */
 Square::Square(Color color, float x_pos, float y_pos, int i, int j):
-	Material(x_pos, y_pos),
+	Material(color, x_pos, y_pos, SQUARE_WIDTH, SQUARE_HEIGHT),
 	m_indices {i, j}
 {
-	m_br.outline_opacity = 0.0f;
-
-	init(color);
+	init();
 };
 
 
 /* Initializes the squares' brush texture according to its colour */
-void Square::init(Color color) {
-	switch (color) {
+void Square::init() {
+	switch (m_color) {
 		case(Color::WHITE):
 			m_br.texture = WHITE_SQUARE_PATH;
 			break;
@@ -24,16 +22,21 @@ void Square::init(Color color) {
 }
 
 
-/* Draws the square at its assigned position */
-void Square::draw()
+/* Check whether this square contains an enemy of the incoming piece */
+bool Square::hasEnemyOf(Chesspiece* piece) const
 {
-	graphics::drawRect(m_pos[0], m_pos[1], 47.0f, 60.0f, m_br);
+	if (m_occupant)
+		return piece->getColor() != m_occupant->getColor();
+
+	return false;
 }
 
 
-/* Obsolete Update */
-[[Obsolete("Object does not need updating. Inherited from GameObject, no usage.", true)]]
-void Square::update(){}
+/* Check if the square has an occupant */
+bool Square::isEmpty() const
+{
+	return !m_occupant;
+}
 
 
 /* Getters and Setters */
@@ -43,14 +46,21 @@ void Square::setPiece(Chesspiece* occupant)
 
 	m_occupant = occupant;
 
-	if (!occupant) return;
-
 	m_occupant->setPosX(m_pos[0]);
 	m_occupant->setPosY(m_pos[1]);
 	m_occupant->setSquare(this);
 }
 
-void Square::setEmpty(){ m_occupant = nullptr; }
-int Square::getIndexI() const { return m_indices[0]; }
-int Square::getIndexJ() const { return m_indices[1]; }
+void Square::setHighlight(bool highlighted, bool enemy, bool hovering) {
+	SETCOLOR(m_br.fill_color, 1.0f, !enemy, !highlighted);
+
+	/* Outline the square when a piece is hovering over it, checked by the bool */
+	m_br.outline_opacity = hovering;
+	m_br.outline_width = 1.5f * hovering;
+	SETCOLOR(m_br.outline_color, !hovering, !hovering, !hovering);
+}
+
+void Square::setEmpty()				 { m_occupant = nullptr; }
+int Square::getIndexI() const		 { return m_indices[0]; }
+int Square::getIndexJ() const		 { return m_indices[1]; }
 Chesspiece* Square::getPiece() const { return m_occupant; }

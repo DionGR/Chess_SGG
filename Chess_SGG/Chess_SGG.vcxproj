@@ -196,6 +196,8 @@
     <ClInclude Include="chesspiece.h" />
     <ClInclude Include="chessboard.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="immaterial.h" />
+    <ClInclude Include="soundhandler.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameobject.h" />

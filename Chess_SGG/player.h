@@ -2,26 +2,29 @@
 
 #include "global.h"
 
-#include <deque>
+#include "immaterial.h"
+
 #include "square.h"
 #include "chesspiece.h"
 
-
-
-
-class Player: GameObject
+/**
+* Player Abstract Class
+*
+* Handles a player's attributes as well as 
+* the movement a player performs on their pieces.
+*/
+class Player: public Immaterial
 {
 protected:
-	Color m_color;
 	Player(Color color) { m_color = color; };
+	Color m_color;
 
-	class Chesspiece* m_active_piece = nullptr;
+	class Chesspiece* m_active_piece{ nullptr };
 public:
-	Color getColor() { return m_color; };
-	virtual void init() {};
-	virtual void draw() {};
+	virtual void releaseInstance() = 0;
+
 	bool update(piecelist_t& pieces, Square* squares[5][4]);
 
-	virtual void releaseInstance() {};
+	Color getColor() { return m_color; };
 };
 

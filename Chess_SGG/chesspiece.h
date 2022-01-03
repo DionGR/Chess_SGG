@@ -1,9 +1,8 @@
 #pragma once
 
-#include <cmath>
-#include <deque>
+#include <cmath>		// For movement calculations
+#include <deque>		// For creating Chesspiece* type definitions
 
-#include "gameobject.h"
 #include "material.h"
 
 #include "square.h"
@@ -14,21 +13,14 @@
 * Provides a model for all our chesspieces, as well
 * most of their instance methods and attributes.
 */
-class Chesspiece : GameObject, public Material {
+class Chesspiece : public Material {
 protected:
-	graphics::Brush m_br;
-
-	Color m_color;
-
 	class Square* m_square;
-
-	bool m_highlighted;
 
 	Chesspiece(Color color);
 	virtual void init() = 0;
 public:
-	void draw();
-	void update();
+	virtual bool canOccupy(Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH]) = 0;
 
 	void setPosX(float x);
 	void setPosY(float x);
@@ -36,8 +28,6 @@ public:
 	void setHighlight(bool highlighted);
 	Square* getSquare() const;
 	const Color getColor() const;
-
-	virtual bool canOccupy(Square* square, Square* square_arr[5][4]) = 0;
 };
 
 /* Chesspiece* Deque and Deque Iterator Type Definitions */

@@ -24,7 +24,7 @@ void Rook::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool Rook::canOccupy(Square* square, Square* square_arr[5][4])
+bool Rook::canOccupy(Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI = m_square->getIndexI();
 	int srcJ = m_square->getIndexJ();
@@ -48,5 +48,5 @@ bool Rook::canOccupy(Square* square, Square* square_arr[5][4])
 				return false;
 	}
 
-	return true;												// The move is valid
+	return 	square->hasEnemyOf(this) || square->isEmpty();	    // The move is valid if there's an enemy or it's empty
 }

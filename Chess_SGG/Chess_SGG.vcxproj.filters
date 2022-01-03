@@ -19,64 +19,79 @@
     <Filter Include="Header Files\GameObjects">
       <UniqueIdentifier>{0bf01449-5c85-4c60-b9f7-21a6f42aa00d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Windows">
-      <UniqueIdentifier>{a36a7577-55ba-4bf4-815d-404c63473e64}</UniqueIdentifier>
+    <Filter Include="Header Files\GameObjects\Material Objects">
+      <UniqueIdentifier>{b2e89910-e3b6-40ca-8459-0ecdd65129d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Windows">
-      <UniqueIdentifier>{1805213a-a311-45f4-968e-e6d797543f9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects\ChessPieces">
+    <Filter Include="Header Files\GameObjects\Material Objects\ChessPieces">
       <UniqueIdentifier>{f09fb402-fc11-41f7-8bd3-b9c7580837ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameObjects\ChessPieces">
+    <Filter Include="Header Files\GameObjects\Immaterial Objects">
+      <UniqueIdentifier>{8a7629b7-37eb-4fbb-858b-0ded7ba16459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects\Material Objects\Squares">
+      <UniqueIdentifier>{b995b70b-cf10-4825-ae27-22d96139c5f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameStates">
+      <UniqueIdentifier>{19cf9cc8-1f11-40bd-a9f5-43838ee2e319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Material Objects">
+      <UniqueIdentifier>{833d78f8-3f0f-474c-950d-f987e17b6494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Material Objects\ChessPieces">
       <UniqueIdentifier>{26ea5405-83ee-4b73-94fd-8292668d04d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameObjects\Chessboard">
-      <UniqueIdentifier>{6359c25e-f992-41f9-b3e9-e8850c2d8de4}</UniqueIdentifier>
+    <Filter Include="Source Files\GameObjects\Material Objects\Squares">
+      <UniqueIdentifier>{676fe041-7523-486c-b7c1-866a8d4ad608}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameObjects\ChessBoard">
-      <UniqueIdentifier>{f5fa4725-ef4c-4d38-b4fc-159a24d90674}</UniqueIdentifier>
+    <Filter Include="Source Files\GameObjects\Immaterial Objects">
+      <UniqueIdentifier>{475255ac-cde1-4143-b75a-33ad563e2a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStates">
+      <UniqueIdentifier>{f6085461-9c75-4369-952c-4a6744b38dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{03051e38-6e6f-4d05-b1cf-d14762eb7aee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="chessboard.cpp">
-      <Filter>Source Files\GameObjects\Chessboard</Filter>
-    </ClCompile>
     <ClCompile Include="pawn.cpp">
-      <Filter>Source Files\GameObjects\ChessPieces</Filter>
-    </ClCompile>
-    <ClCompile Include="square.cpp">
-      <Filter>Source Files\GameObjects\Chessboard</Filter>
+      <Filter>Source Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClCompile>
     <ClCompile Include="chesspiece.cpp">
-      <Filter>Source Files\GameObjects\ChessPieces</Filter>
+      <Filter>Source Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClCompile>
     <ClCompile Include="king.cpp">
-      <Filter>Source Files\GameObjects\ChessPieces</Filter>
+      <Filter>Source Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClCompile>
     <ClCompile Include="queen.cpp">
-      <Filter>Source Files\GameObjects\ChessPieces</Filter>
+      <Filter>Source Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClCompile>
     <ClCompile Include="rook.cpp">
-      <Filter>Source Files\GameObjects\ChessPieces</Filter>
+      <Filter>Source Files\GameObjects\Material Objects\ChessPieces</Filter>
+    </ClCompile>
+    <ClCompile Include="square.cpp">
+      <Filter>Source Files\GameObjects\Material Objects\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="chessboard.cpp">
+      <Filter>Source Files\GameObjects\Immaterial Objects</Filter>
     </ClCompile>
     <ClCompile Include="blackplayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObjects\Immaterial Objects</Filter>
     </ClCompile>
     <ClCompile Include="whiteplayer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObjects\Immaterial Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\GameObjects\Immaterial Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Source Files\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,46 +101,52 @@
     <ClInclude Include="gameobject.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="chesspiece.h">
-      <Filter>Header Files\GameObjects\ChessPieces</Filter>
+      <Filter>Header Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClInclude>
     <ClInclude Include="pawn.h">
-      <Filter>Header Files\GameObjects\ChessPieces</Filter>
-    </ClInclude>
-    <ClInclude Include="chessboard.h">
-      <Filter>Header Files\GameObjects\ChessBoard</Filter>
-    </ClInclude>
-    <ClInclude Include="square.h">
-      <Filter>Header Files\GameObjects\ChessBoard</Filter>
+      <Filter>Header Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClInclude>
     <ClInclude Include="king.h">
-      <Filter>Header Files\GameObjects\ChessPieces</Filter>
+      <Filter>Header Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClInclude>
     <ClInclude Include="rook.h">
-      <Filter>Header Files\GameObjects\ChessPieces</Filter>
+      <Filter>Header Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClInclude>
     <ClInclude Include="queen.h">
-      <Filter>Header Files\GameObjects\ChessPieces</Filter>
+      <Filter>Header Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="blackplayer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="material.h">
+      <Filter>Header Files\GameObjects\Material Objects</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="square.h">
+      <Filter>Header Files\GameObjects\Material Objects\Squares</Filter>
     </ClInclude>
     <ClInclude Include="whiteplayer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjects\Immaterial Objects</Filter>
     </ClInclude>
-    <ClInclude Include="material.h">
+    <ClInclude Include="blackplayer.h">
+      <Filter>Header Files\GameObjects\Immaterial Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\GameObjects\Immaterial Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="soundhandler.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="immaterial.h">
+      <Filter>Header Files\GameObjects\Immaterial Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="chessboard.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

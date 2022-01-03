@@ -1,6 +1,7 @@
 #include "debug.h"
-#include "game.h"
+
 #include "menu.h"
+#include "game.h"
 
 void draw() 
 {
@@ -40,6 +41,7 @@ void update(float ms)
 	}
 }
 
+
 int main(int argc, char** argv)
 {
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
@@ -57,20 +59,19 @@ int main(int argc, char** argv)
 	graphics::setCanvasScaleMode(graphics::CANVAS_SCALE_STRETCH);
 
 	menu->init();
-	
+
 	graphics::setUserData(game);
 	graphics::setDrawFunction(draw);
 	graphics::setUpdateFunction(update);
 	graphics::startMessageLoop();
 
-	
+
 	menu->releaseInstance();
 	game->releaseInstance();
 
 	graphics::destroyWindow();
 
 	_CrtDumpMemoryLeaks();
-
 
 	return EXIT_SUCCESS;
 }

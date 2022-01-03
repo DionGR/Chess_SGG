@@ -24,7 +24,7 @@ void King::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool King::canOccupy(Square* square, Square* square_arr[5][4])
+bool King::canOccupy(Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI = m_square->getIndexI();
 	int srcJ = m_square->getIndexJ();
@@ -32,5 +32,8 @@ bool King::canOccupy(Square* square, Square* square_arr[5][4])
 	int dstJ = square->getIndexJ();
 
 	// The move is valid if it is exactly one step in any direction
-	return (std::abs(dstI - srcI) == 1 && std::abs(dstJ - srcJ) == 1) || (std::abs(dstI - srcI) == 1 && srcJ == dstJ) || (std::abs(dstJ - srcJ) == 1 && srcI == dstI);
+	if ((std::abs(dstI - srcI) == 1 && std::abs(dstJ - srcJ) == 1) || (std::abs(dstI - srcI) == 1 && srcJ == dstJ) || (std::abs(dstJ - srcJ) == 1 && srcI == dstI))
+		return 	square->hasEnemyOf(this) || square->isEmpty();
+
+	return false;
 }

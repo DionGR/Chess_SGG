@@ -17,12 +17,6 @@ void WhitePlayer::releaseInstance()
 }
 
 
-void WhitePlayer::init()
-{
-}
 
-void WhitePlayer::draw()
-{
-}
 
 

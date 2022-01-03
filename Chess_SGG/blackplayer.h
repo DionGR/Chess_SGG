@@ -2,8 +2,11 @@
 
 #include "player.h"
 
-
-
+/**
+* BlackPlayer Singleton Class
+*
+* Restricts the chessboard to 1 instance.
+*/
 class BlackPlayer: public Player
 {
 private:
@@ -12,8 +15,5 @@ private:
 public:
 	static BlackPlayer* getInstance();
 	void releaseInstance();
-
-	void init();
-	void draw();
 };
 

@@ -17,7 +17,6 @@ void Game::releaseInstance()
 {
 	if (m_board) m_board->releaseInstance();
 
-
 	if (m_instance) delete m_instance;
 }
 
@@ -25,10 +24,21 @@ void Game::releaseInstance()
 /* Initializes the game's main components.*/
 void Game::init()
 {
+	/* Set our background to gray for the game */
+	graphics::Brush background_br;
+	SETCOLOR(background_br.fill_color, 0.25f, 0.25f, 0.25f);
+	graphics::setWindowBackground(background_br);
+
+	/* Set our TEXT's brush colour to white */
+	m_text_br.outline_opacity = 0.0f;
+	SETCOLOR(m_text_br.fill_color, 1.0f, 1.0f, 1.0f);
+
+	/* Preload all the BITMAPs for better future loading */
 	graphics::preloadBitmaps(static_cast<std::string>(BITMAP_PATH) + "\\squares\\");
 	graphics::preloadBitmaps(static_cast<std::string>(BITMAP_PATH) + "\\chesspieces\\");
-	//sleep(2000);
+	//sleep(2000); 
 
+	/* Initialize our gameboard and get the unique instance */
 	m_board = Chessboard::getInstance();
 	m_board->init();
 	
@@ -39,22 +49,35 @@ void Game::init()
 /* Draws the game's assets */
 void Game::draw()
 {
-	/* Background */
-	graphics::Brush br;
-	br.outline_opacity = 0.0f;
-	SETCOLOR(br.fill_color, 0.25f, 0.25f, 0.25f);
-	graphics::setWindowBackground(br);
-
-	/* Depending on the state, draw the appropriate thing*/
+	/* Depending on the state, draw the appropriate thing */
 	switch (m_state){
-		case State::INIT:	 // Loading Screen
-			SETCOLOR(br.fill_color, 1.0f, 1.0f, 1.0f);
-			graphics::setFont(FONT_PATH);
-			graphics::drawText(CANVAS_WIDTH / 3.1, CANVAS_HEIGHT / 2, 20.0f, "LOADING ASSETS...", br);
+		/* Loading Screen */
+		case State::INIT:
+			graphics::drawText(CANVAS_WIDTH / 3.1, CANVAS_HEIGHT / 2, 20.0f, "LOADING ASSETS...", m_text_br);
 			m_state = State::LOADING;
 			return;
-		case State::PLAYING: // Game Board
+		/* Game Board */
+		case State::PLAYING: 
 			m_board->draw();
+			return;
+		/* Win Screens */
+		case State::BLACK_WINS:
+			graphics::drawText(CANVAS_WIDTH / 2.6, CANVAS_HEIGHT / 2, 20.0f, "BLACK WINS", m_text_br);
+			graphics::drawText(CANVAS_WIDTH / 3.8, CANVAS_HEIGHT / 1.17, 20.0f, "CLICK FOR GAME REVIEW...", m_text_br);
+			graphics::drawText(CANVAS_WIDTH / 3.5, CANVAS_HEIGHT / 1.1, 20.0f, "PRESS SPACE TO EXIT...", m_text_br);
+			return;
+		case State::WHITE_WINS:
+			graphics::drawText(CANVAS_WIDTH / 2.6, CANVAS_HEIGHT / 2, 20.0f, "WHITE WINS", m_text_br);
+			graphics::drawText(CANVAS_WIDTH / 3.8, CANVAS_HEIGHT / 1.17, 20.0f, "CLICK FOR GAME REVIEW...", m_text_br);
+			graphics::drawText(CANVAS_WIDTH / 3.5, CANVAS_HEIGHT / 1.1, 20.0f, "PRESS SPACE TO EXIT...", m_text_br);
+			return;
+		/* Game Review - Shows board and exit messages*/
+		case State::GAME_REVIEW:
+			m_board->draw(); // The board is only drawn, not updated.
+			SETCOLOR(m_text_br.fill_color, 1.0f, .0f, .0f);
+			graphics::drawText(CANVAS_WIDTH / 2.80, CANVAS_HEIGHT / 6, 20.0f, "GAME REVIEW", m_text_br);
+			SETCOLOR(m_text_br.fill_color, 1.0f, 1.0f, 1.0f);
+			graphics::drawText(CANVAS_WIDTH / 3.5, CANVAS_HEIGHT / 1.1, 20.0f, "PRESS SPACE TO EXIT...", m_text_br);
 			return;
 	}	
 }
@@ -63,14 +86,33 @@ void Game::draw()
 /* Continuously updates, awaiting for user input. */
 void Game::update()
 {
+	/* Depending on the state... */
 	switch (m_state) {
-		case State::PLAYING:
-			m_board->update();
+		/* Do nothing and await for the game to start */
+		case State::INIT:
 			return;
+		/* Initialize the game items */
 		case State::LOADING:
 			init();
+			return;
+		/* The board is active and able to change the state anytime, when the game finishes */
+		case State::PLAYING:
+			m_board->update(m_state);
+			return;
+		/* Game Finished. Allow for game review or exit */
+		case State::BLACK_WINS:
+		case State::WHITE_WINS:
+			graphics::MouseState mouse;
+			graphics::getMouseState(mouse);
+
+			if (mouse.button_left_pressed) 
+				m_state = State::GAME_REVIEW;
 			__fallthrough;
-		case State::INIT:
+		/* Allow for exit after the player is done reviewing */
+		case State::GAME_REVIEW:
+			/* Space Exits the Game on WINNING or REVIEW screen */
+			if (graphics::getKeyState(graphics::SCANCODE_SPACE)) 
+				graphics::stopMessageLoop();
 			return;
 	}
 }

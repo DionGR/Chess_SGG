@@ -17,13 +17,3 @@ void BlackPlayer::releaseInstance()
 }
 
 
-void BlackPlayer::init()
-{
-}
-
-void BlackPlayer::draw()
-{
-}
-
-
-

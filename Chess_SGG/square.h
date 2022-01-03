@@ -1,27 +1,32 @@
 #pragma once
 
-#include "gameobject.h"
 #include "material.h"
 
 #include "chesspiece.h"
 
-class Square: GameObject, public Material
+/**
+* Square Class
+*
+* Handles the Square's attributes.
+*/
+class Square: public Material
 {
 private:
-	const int m_indices[2];
-
 	class  Chesspiece* m_occupant;
 
-	graphics::Brush m_br;
+	const int m_indices[2];
 public:
 	Square(Color color, float x_pos, float y_pos, int i, int j);
 
-	void init(Color color);
-	void draw();
-	void update();
+	void init();
+
+
+	bool hasEnemyOf(Chesspiece* piece) const;
+	bool isEmpty() const;
 
 	void setPiece(Chesspiece* occupant);
 	void setEmpty();
+	void setHighlight(bool highlighted = false, bool enemy = false, bool hovering = false);
 	Chesspiece* getPiece() const;
 	int getIndexI() const;
 	int getIndexJ() const;

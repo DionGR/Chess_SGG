@@ -24,7 +24,7 @@ void Pawn::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool Pawn::canOccupy(Square* square, Square* square_arr[5][4])
+bool Pawn::canOccupy(Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI = m_square->getIndexI();
 	int srcJ = m_square->getIndexJ();
@@ -34,9 +34,9 @@ bool Pawn::canOccupy(Square* square, Square* square_arr[5][4])
 	int di{ m_color == Color::WHITE ? 1 : -1 };					// I-index is negative when moving as a BLACK pawn
 
 	if (dstI - srcI == di && srcJ == dstJ)						// If the move is one step forward vertically (I-axis)
-		return !square_arr[dstI][dstJ]->getPiece();				// Can occupy if the square is empty
+		return square->isEmpty();								// Can occupy if the square is empty
 	else if (dstI - srcI == di && std::abs(dstJ - srcJ) == 1)	// If the move is one step diagonally
-		return !!square_arr[dstI][dstJ]->getPiece();			// Can occupy if the square is occupied by an enemy
+		return square->hasEnemyOf(this);						// Can occupy if the square is occupied by an enemy
 	
 	return false;												// Else the move is invalid
 }

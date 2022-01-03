@@ -9,6 +9,6 @@ private:
 public:
 	Pawn(Color color);
 
-    bool canOccupy(Square* square, Square* square_arr[5][4]);
+    bool canOccupy(Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH]);
 };
 
