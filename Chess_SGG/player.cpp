@@ -8,7 +8,7 @@ Player::Player(Color color):
 
 
 /* Returns the player's colour */
-Color Player::getColor() {
+Color Player::getColor() const {
 	return m_color; 
 }
 
@@ -24,7 +24,7 @@ bool Player::update(const piecelist_t& pieces, Square* squares[BOARD_WIDTH][BOAR
 	float y_pos{ graphics::windowToCanvasY(mouse.cur_pos_y) };
 
 	/* For every piece the player owns */
-	for (auto piece: pieces) {
+	for (auto& piece: pieces) {
 
 #ifdef _DEBUG
 		/* Highlight any piece the player hovers over(if they own it) */
@@ -47,8 +47,8 @@ bool Player::update(const piecelist_t& pieces, Square* squares[BOARD_WIDTH][BOAR
 			if(g_diff == Difficulty::EASY)
 				for (int i{ 0 }; i < BOARD_HEIGHT; ++i)
 					for (int j{ 0 }; j < BOARD_WIDTH; ++j)
-						if (m_active_piece->canOccupy(squares[i][j], squares)) 
-							squares[i][j]->setHighlight(true, squares[i][j]->hasEnemyOf(m_active_piece), squares[i][j]->contains(x_pos, y_pos));
+						if (m_active_piece->canOccupy(*squares[i][j], squares)) 
+							squares[i][j]->setHighlight(true, squares[i][j]->hasEnemyOf(*m_active_piece), squares[i][j]->contains(x_pos, y_pos));
 		}
 
 
@@ -63,9 +63,9 @@ bool Player::update(const piecelist_t& pieces, Square* squares[BOARD_WIDTH][BOAR
 						Square* square{ squares[i][j] };
 						if (square->contains(m_active_piece->getPosX(), m_active_piece->getPosY())) {
 							/* If the piece can occupy that square */
-							if (m_active_piece->canOccupy(square, squares)) {
+							if (m_active_piece->canOccupy(*square, squares)) {
 								m_active_piece->getSquare()->setEmpty();					 // Set the piece's previous square to null
-								square->setPiece(m_active_piece);							 // Set the square's piece to the active piece
+								square->setPiece(*m_active_piece);							 // Set the square's piece to the active piece
 								moved = true;												 // Flag that the piece has moved for our update function.
 								if (!m_active_piece->hasMoved()) m_active_piece->setMoved(); // Flag that our piece moved for special moves.
 								return;
@@ -83,12 +83,12 @@ bool Player::update(const piecelist_t& pieces, Square* squares[BOARD_WIDTH][BOAR
 									int rookDstJ{ (srcJ < dstJ) ? 5 : 3 };
 									
 									/* And there are no pieces inbetween */
-									if (target->canOccupy(squares[srcI][rookDstJ], squares) && squares[srcI][rookDstJ]->isEmpty()) {
+									if (target->canOccupy(*squares[srcI][rookDstJ], squares) && squares[srcI][rookDstJ]->isEmpty()) {
 										/* Perform castling between the king and the rook */
 										m_active_piece->getSquare()->setEmpty();
 										target->getSquare()->setEmpty();
-										squares[srcI][kingDstJ]->setPiece(m_active_piece);
-										squares[srcI][rookDstJ]->setPiece(target);
+										squares[srcI][kingDstJ]->setPiece(*m_active_piece);
+										squares[srcI][rookDstJ]->setPiece(*target);
 
 										moved = true;
 										m_active_piece->setMoved();

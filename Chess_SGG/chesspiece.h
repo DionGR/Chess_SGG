@@ -15,22 +15,23 @@
 */
 class Chesspiece : public Material {
 protected:
-	std::string m_name;
-	cords m_icon_pos;
+	const std::string m_name;
+	const cords m_icon_pos;
 
 	class Square* m_square;
 	bool m_moved;
 
 	Chesspiece(Color color, std::string name, float x_icon_pos, float y_icon_pos);
 public:
-	virtual bool canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH]) = 0;
+	virtual bool canOccupy(const Square& square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH]) = 0;
 
 	void setPosX(float x) override;
 	void setPosY(float y) override;
-	void setSquare(Square* square);
+	void setSquare(Square& square);
 	void setHighlight(bool highlighted);
+	void setDead();
 	void setMoved();
-	bool hasMoved();
+	bool hasMoved() const;
 	Square* getSquare() const;
 	std::string getName() const;
 	cords getIconPos() const;

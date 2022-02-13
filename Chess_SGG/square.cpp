@@ -24,10 +24,10 @@ void Square::init() {
 
 
 /* Check whether this square contains an enemy of the incoming piece */
-bool Square::hasEnemyOf(Chesspiece* piece) const
+bool Square::hasEnemyOf(const Chesspiece& piece) const
 {
 	if (m_occupant)
-		return piece->getColor() != m_occupant->getColor();
+		return piece.getColor() != m_occupant->getColor();
 
 	return false;
 }
@@ -41,15 +41,15 @@ bool Square::isEmpty() const
 
 
 /* Getters and Setters */
-void Square::setPiece(Chesspiece* occupant)
+void Square::setPiece(Chesspiece& occupant)
 {
-	if (m_occupant) m_occupant->setSquare(nullptr);	// If there is an existing occupant, set their square to null
+	if (m_occupant) m_occupant->setDead();	// If there is an existing occupant, set their square to null
 
-	m_occupant = occupant;
+	m_occupant = &occupant;
 
 	m_occupant->setPosX(m_pos.x_pos);
 	m_occupant->setPosY(m_pos.y_pos);
-	m_occupant->setSquare(this);
+	m_occupant->setSquare(*this);
 }
 
 void Square::setHighlight(bool highlighted, bool enemy, bool hovering) {

@@ -24,12 +24,12 @@ void Bishop::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool Bishop::canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
+bool Bishop::canOccupy(const Square& square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI{ m_square->getIndexI() };
 	int srcJ{ m_square->getIndexJ() };
-	int dstI{ square->getIndexI() };
-	int dstJ{ square->getIndexJ() };
+	int dstI{ square.getIndexI() };
+	int dstJ{ square.getIndexJ() };
 
 	int di{ (srcI < dstI) ? 1 : -1 };
 	int dj{ (srcJ < dstJ) ? 1 : -1 };
@@ -39,7 +39,7 @@ bool Bishop::canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BO
 			if (square_arr[srcI + i * di][srcJ + i * dj]->getPiece() != nullptr)
 				return false;
 		}
-		return 	square->hasEnemyOf(this) || square->isEmpty();						// It is valid if it has an enemy
+		return 	square.hasEnemyOf(*this) || square.isEmpty();						// It is valid if it has an enemy
 	}
 	
 	return false;

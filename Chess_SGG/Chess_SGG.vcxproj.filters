@@ -157,8 +157,5 @@
     <ClInclude Include="knight.h">
       <Filter>Header Files\GameObjects\Material Objects\ChessPieces</Filter>
     </ClInclude>
-    <ClInclude Include="capturedicon.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

@@ -32,11 +32,11 @@ private:
 	static Chessboard* m_instance;
 	graphics::Brush m_text_br;
 
-	Player* m_white;
-	Player* m_black;
-	Player** m_active_player;
+	class Player* m_white;
+	class Player* m_black;
+	class Player** m_active_player;
 
-	Square* m_squares[BOARD_WIDTH][BOARD_HEIGHT];
+	class Square* m_squares[BOARD_WIDTH][BOARD_HEIGHT];
 	piecelist_t m_w_pieces;
 	piecelist_t m_b_pieces;
 	capturemap_t m_captured;
@@ -53,7 +53,7 @@ public:
 	static Chessboard* getInstance();
 	void releaseInstance();
 
-	Player& getActivePlayer();	// Must be non-null for our purpose, therefore we return reference. 
+	Player& getActivePlayer() const;	// Must be non-null for our purpose, therefore we return reference. 
 
 	void init() override;
 	void draw() override;

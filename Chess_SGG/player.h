@@ -18,7 +18,7 @@ class Player: public Immaterial
 {
 protected:
 	Player(Color color);
-	Color m_color;
+	const Color m_color;
 
 	class Chesspiece* m_active_piece;
 public:
@@ -26,6 +26,6 @@ public:
 
 	bool update(const piecelist_t& pieces, Square* squares[BOARD_WIDTH][BOARD_HEIGHT]);
 
-	Color getColor();
+	Color getColor() const;
 };
 

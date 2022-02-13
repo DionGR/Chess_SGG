@@ -16,9 +16,9 @@ Chessboard::~Chessboard()
 	if (m_white) m_white->releaseInstance();
 	if (m_black) m_black->releaseInstance();
 
-	for (auto piece : m_b_pieces)
+	for (auto& piece : m_b_pieces)
 		delete piece;
-	for (auto piece : m_w_pieces)
+	for (auto& piece : m_w_pieces)
 		delete piece;
 
 	for (int i{ 0 }; i < BOARD_HEIGHT; ++i)
@@ -106,21 +106,21 @@ void Chessboard::draw()
 	/* in a different order so as to prevent piece shadowing depending on the turn */
 	switch (active_color) {
 	case Color::WHITE:
-		for (auto piece : m_b_pieces)
+		for (auto const& piece: m_b_pieces)
 			piece->draw();
-		for (auto piece : m_w_pieces)
+		for (auto const& piece: m_w_pieces)
 			piece->draw();
 		break;
 	case Color::BLACK:
-		for (auto piece : m_w_pieces)
+		for (auto const& piece: m_w_pieces)
 			piece->draw();
-		for (auto piece : m_b_pieces)
+		for (auto const& piece: m_b_pieces)
 			piece->draw();
 		break;
 	}
 
 	/* Draw the captured pieces icons */
-	for (auto captured : m_captured) {
+	for (auto& captured : m_captured) {
 		int captured_count{ captured.second.first };
 
 		/* If a piece is captured at least once */
@@ -188,7 +188,7 @@ void Chessboard::update(State& state)
 						std::string captured_name{ piece->getName() };
 
 						/* Check for queen (we can spawn multiple but only show 1) or King (shouldn't be added to the map) */
-						if (!instanceof<King>(piece) || instanceof<Queen>(piece) && (*captured)[captured_name].first < 1)
+						if ((!instanceof<King>(piece) && !instanceof<Queen>(piece)) || instanceof<Queen>(piece) && (*captured)[captured_name].first < 1)
 							(*captured)[captured_name].first += 1;
 
 
@@ -216,7 +216,7 @@ void Chessboard::update(State& state)
 					if (instanceof<Pawn>(piece) && (piece->getSquare()->getIndexI() == 0 || piece->getSquare()->getIndexI() == 7)) {
 						*piece_itr = new Queen(piece->getColor());
 						Chesspiece* new_piece = *piece_itr;
-						piece->getSquare()->setPiece(new_piece);
+						piece->getSquare()->setPiece(*new_piece);
 						delete piece;
 					}
 				}
@@ -230,7 +230,7 @@ void Chessboard::update(State& state)
 
 
 /* Return the active player*/
-Player& Chessboard::getActivePlayer()
+Player& Chessboard::getActivePlayer() const
 {
 	return **m_active_player;
 }
@@ -284,20 +284,20 @@ void Chessboard::assignPieces(piecelist_t& w_pieces, piecelist_t& b_pieces, Squa
 	piecelist_itr_t piece_itr = w_pieces.begin();
 	for (int i{ 0 }; i < 2; ++i)
 		for (int j{ 0 }; j < BOARD_WIDTH; ++j)
-			squares[i][j]->setPiece(*piece_itr++);
+			squares[i][j]->setPiece(**piece_itr++);
 
 	/* Assign the Black pieces */
 	piecelist_rvitr_t piece_rvitr = b_pieces.rbegin();
 	for (int i{ BOARD_HEIGHT - 2 }; i < BOARD_HEIGHT; ++i)
 		for (int j{ BOARD_WIDTH - 1 }; j >= 0; --j)
-			squares[i][j]->setPiece(*piece_rvitr++);
+			squares[i][j]->setPiece(**piece_rvitr++);
 }
 
 /* HELPER - Initialize the captured list */
 void Chessboard::initCaptured(piecelist_t& piecelist, capturemap_t& captured) {
 
 	/* For every piece in the piecelist */
-	for (auto piece : piecelist) {
+	for (auto const& piece : piecelist) {
 		std::string name{ piece->getName() };
 		/* If it's not already in and it isn't a King*/
 		/* Initialize 0 (captured #) and the cords for the icon */

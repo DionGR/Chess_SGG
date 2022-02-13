@@ -24,19 +24,19 @@ void Knight::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool Knight::canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
+bool Knight::canOccupy(const Square& square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI{ m_square->getIndexI() };
 	int srcJ{ m_square->getIndexJ() };
-	int dstI{ square->getIndexI() };
-	int dstJ{ square->getIndexJ() };
+	int dstI{ square.getIndexI() };
+	int dstJ{ square.getIndexJ() };
 
 	int di{ (srcI < dstI) ? 1 : -1 };
 	int dj{ (srcJ < dstJ) ? 1 : -1 };
 
 	/* Two steps diagonally/vertically and one step up/down or vice versa */
 	if ((dstI - srcI == di && std::abs(dstJ - srcJ) == 2) || (dstJ - srcJ == dj && std::abs(dstI - srcI) == 2)) 						
-		return 	square->hasEnemyOf(this) || square->isEmpty();						
+		return 	square.hasEnemyOf(*this) || square.isEmpty();						
 	
 	return false;
 }

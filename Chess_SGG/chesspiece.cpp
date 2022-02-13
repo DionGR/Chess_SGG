@@ -14,9 +14,10 @@ Chesspiece::Chesspiece(Color color, std::string name, float x_icon_pos, float y_
 void Chesspiece::setHighlight(bool highlighted) { m_br.outline_opacity = highlighted; }
 void Chesspiece::setPosX(float x)				{ m_pos.x_pos = x; }
 void Chesspiece::setPosY(float y)				{ m_pos.y_pos = y; }
-void Chesspiece::setSquare(Square* square)		{ m_square = square; }
+void Chesspiece::setSquare(Square& square)		{ m_square = &square; }
+void Chesspiece::setDead()						{ m_square = nullptr; }
 void Chesspiece::setMoved()						{ m_moved = true;  }
-bool Chesspiece::hasMoved()						{ return m_moved; }
+bool Chesspiece::hasMoved()		 const			{ return m_moved; }
 Square* Chesspiece::getSquare()   const			{ return m_square; }
 std::string Chesspiece::getName() const			{ return m_name; } 
 cords Chesspiece::getIconPos()    const			{ return m_icon_pos;  }

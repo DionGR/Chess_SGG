@@ -196,7 +196,6 @@
   <ItemGroup>
     <ClInclude Include="bishop.h" />
     <ClInclude Include="blackplayer.h" />
-    <ClInclude Include="capturedicon.h" />
     <ClInclude Include="chesspiece.h" />
     <ClInclude Include="chessboard.h" />
     <ClInclude Include="debug.h" />

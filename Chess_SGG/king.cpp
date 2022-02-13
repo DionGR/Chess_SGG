@@ -24,23 +24,23 @@ void King::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool King::canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
+bool King::canOccupy(const Square& square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI{ m_square->getIndexI() };
 	int srcJ{ m_square->getIndexJ() };
-	int dstI{ square->getIndexI() };
-	int dstJ{ square->getIndexJ() };
+	int dstI{ square.getIndexI() };
+	int dstJ{ square.getIndexJ() };
 
 	// The move is valid if it is exactly one step in any direction
 	if ((std::abs(dstI - srcI) == 1 && std::abs(dstJ - srcJ) == 1) || (std::abs(dstI - srcI) == 1 && srcJ == dstJ) || (std::abs(dstJ - srcJ) == 1 && srcI == dstI))
-		return 	square->hasEnemyOf(this) || square->isEmpty();
+		return 	square.hasEnemyOf(*this) || square.isEmpty();
 
 	return false;
 }
 
 bool King::isThreatened(const piecelist_t& enemies, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH]) {
-	for (auto enemy : enemies) 
-		if (enemy->canOccupy(m_square, square_arr))
+	for (auto const& enemy: enemies) 
+		if (enemy->canOccupy(*m_square, square_arr))
 			return true;
 	return false;
 }

@@ -14,17 +14,17 @@ class Square: public Material
 private:
 	class  Chesspiece* m_occupant;
 
-	cords m_pos;
+	const cords m_pos;
 	const int m_indices[2];
 public:
 	Square(Color color, float x_pos, float y_pos, int i, int j);
 
 	void init() override;
 
-	bool hasEnemyOf(Chesspiece* piece) const;
+	bool hasEnemyOf(const Chesspiece& piece) const;
 	bool isEmpty() const;
 
-	void setPiece(Chesspiece* occupant);
+	void setPiece(Chesspiece& occupant);
 	void setEmpty();
 	void setHighlight(bool highlighted = false, bool enemy = false, bool hovering = false);
 	Chesspiece* getPiece() const;

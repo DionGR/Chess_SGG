@@ -24,12 +24,12 @@ void Queen::init()
 
 
 /* Checks whether the piece can occupy the square given */
-bool Queen::canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
+bool Queen::canOccupy(const Square& square, Square* square_arr[BOARD_HEIGHT][BOARD_WIDTH])
 {
 	int srcI{ m_square->getIndexI() };
 	int srcJ{ m_square->getIndexJ() };
-	int dstI{ square->getIndexI() };
-	int dstJ{ square->getIndexJ() };
+	int dstI{ square.getIndexI() };
+	int dstJ{ square.getIndexJ() };
 
 	int di{ (srcI < dstI) ? 1 : -1 };
 	int dj{ (srcJ < dstJ) ? 1 : -1 };
@@ -39,20 +39,20 @@ bool Queen::canOccupy(const Square* square, Square* square_arr[BOARD_HEIGHT][BOA
 			if (square_arr[srcI][j]->getPiece() != nullptr)
 				return false;
 		}
-		return 	square->hasEnemyOf(this) || square->isEmpty();			// It is valid if it has an enemy
+		return 	square.hasEnemyOf(*this) || square.isEmpty();			// It is valid if it has an enemy
 	}
 	else if (srcJ == dstJ) {											
 		for (int i{ srcI + di }; i != dstI; i += di) {
 			if (square_arr[i][srcJ]->getPiece() != nullptr)
 				return false;
 		}
-		return 	square->hasEnemyOf(this) || square->isEmpty();
+		return 	square.hasEnemyOf(*this) || square.isEmpty();
 	}else if (std::abs(dstI - srcI) == std::abs(dstJ - srcJ)) {			// If the move is diagonal 
 		for (int i{ 1 }; i < std::abs(srcI - dstI); ++i) {				// Same as Bishop
 			if (square_arr[srcI + i * di][srcJ + i * dj]->getPiece() != nullptr)
 				return false;
 		}
-		return 	square->hasEnemyOf(this) || square->isEmpty();			
+		return 	square.hasEnemyOf(*this) || square.isEmpty();			
 	}
 
 	return false;														// Any other case, invalid
