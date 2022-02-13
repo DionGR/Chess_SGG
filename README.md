@@ -17,7 +17,7 @@ Run the EXE directly from the bin folder or re-build and compile the project aga
 * v1.1 - Transition to full-scale 8x8 chessboard with all the pieces, castling & two-step pawn move
 * v1.2 - Game Review Screen & Ability to retire early
 * v1.3 - Captured piece icons & Stalemate
-* TO-DO: Simulation for check-mate checking, MULTIPLAYER(?)
+* TO-DO: Simulation for check-mate checking, Multiplayer
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
