@@ -4,7 +4,7 @@ Chess SGG is a graphical game created using the [Simple Graphics Game Library](h
 
 
 ## Preview 
-[![Watch the video](https://img.youtube.com/vi/NdRCUJB6Fl8/hqdefault.jpg)](https://www.youtube.com/NdRCUJB6Fl8)
+[![Watch the video](https://img.youtube.com/vi/NdRCUJB6Fl8/hqdefault.jpg)](https://youtu.be/NdRCUJB6Fl8)
 
 
 
